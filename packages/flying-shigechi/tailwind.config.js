@@ -54,6 +54,15 @@ export default {
       20: "20px",
       full: "9999px",
     },
+    height: {
+      full: "100%",
+      48: "48px",
+      56: "56px",
+    },
+    width: {
+      full: "100%",
+      300: "300px",
+    },
     extend: {},
   },
   plugins: [],
