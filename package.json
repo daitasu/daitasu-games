@@ -1,0 +1,17 @@
+{
+  "name": "daitasu-games",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "build": "pnpm run build --filter './packages/*'",
+    "test": "pnpm run test --filter './packages/*'"
+    },
+  "author": "daitasu",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "jest": "^27.0.6"
+  }
+}
+
