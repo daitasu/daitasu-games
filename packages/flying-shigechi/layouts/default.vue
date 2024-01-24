@@ -11,7 +11,7 @@ const closeMenu = () => (isOpen.value = false);
   <div class="text-16">
     <header>
       <div
-        class="header fixed top-0 right-0 w-full flex justify-between items-center bg-blue-200"
+        class="header fixed top-0 right-0 w-full flex justify-between items-center bg-indigo-200"
       >
         <div
           class="flex flex-row items-center mx-2 cursor-pointer"
@@ -31,7 +31,6 @@ const closeMenu = () => (isOpen.value = false);
 </template>
 
 <style lang="scss">
-/* Write scss here */
 .header {
   height: 56px;
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),

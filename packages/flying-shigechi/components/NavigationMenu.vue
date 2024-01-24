@@ -48,8 +48,8 @@ const handleClose = () => {
         <NuxtLink
           v-for="menu in menus"
           :to="menu.to"
-          :class="{ 'text-blue-600': isActiveMenu(menu.to) }"
-          class="h-48 px-1 flex flex-row items-center hover:opacity-80 hover:bg-blue-100 transition"
+          :class="{ 'text-indigo-600': isActiveMenu(menu.to) }"
+          class="h-48 px-1 first:mt-0 mt-1 flex flex-row items-center rounded-16 hover:opacity-80 hover:bg-indigo-300 transition"
           @click="handleClose"
         >
           <Icon :name="menu.icon" color="text-gray-600" size="24" />

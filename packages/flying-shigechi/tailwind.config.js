@@ -56,12 +56,21 @@ export default {
     },
     height: {
       full: "100%",
+      auto: "auto",
       48: "48px",
       56: "56px",
     },
     width: {
       full: "100%",
-      300: "300px",
+      auto: "auto",
+      180: "180px", //Button
+      300: "300px", // Panel
+      420: "420px", // Modal
+    },
+    maxWidth: {
+      180: "180px", //Button
+      300: "300px", // Panel
+      420: "420px", // Modal
     },
     extend: {},
   },
