@@ -14,7 +14,7 @@ const closePlayModal = () => {
 <template>
   <div class="mt-7">
     <StartModal v-if="isOpen" @onClickClose="closePlayModal" />
-    <PrimaryButton class="start-button" @onClick="openPlayModal"
+    <PrimaryButton v-else class="start-button" @onClick="openPlayModal"
       >Play Game</PrimaryButton
     >
   </div>
