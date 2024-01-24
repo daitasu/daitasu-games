@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import PrimaryButton from "~/components/GameControl/Button/PrimaryButton.vue";
 import StartModal from "~/components/GameControl/Modal/StartModal.vue";
+import Player from "~/components/Sprite/Player.vue";
+import Enemy from "~/components/Sprite/Enemy.vue";
+import Ground from "~/components/Map/Ground.vue";
+import GameInfoText from "~/components/GameControl/Text/GameInfoText.vue";
 
 const isOpen = ref<boolean>(false);
 const openPlayModal = () => {
@@ -17,6 +21,10 @@ const closePlayModal = () => {
     <PrimaryButton v-else class="start-button" @onClick="openPlayModal"
       >Play Game</PrimaryButton
     >
+    <GameInfoText />
+    <Enemy />
+    <Player />
+    <Ground />
   </div>
 </template>
 
