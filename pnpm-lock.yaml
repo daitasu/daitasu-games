@@ -17,6 +17,9 @@ importers:
 
   packages/flying-shigechi:
     devDependencies:
+      '@nuxtjs/device':
+        specifier: ^3.1.1
+        version: 3.1.1
       '@nuxtjs/tailwindcss':
         specifier: ^6.10.3
         version: 6.11.0
@@ -1443,6 +1446,16 @@ packages:
       - vls
       - vti
       - vue-tsc
+    dev: true
+
+  /@nuxtjs/device@3.1.1:
+    resolution: {integrity: sha512-wHTziEevt1hdgePQwPhEedWW3COalhP0YGVB+sGLqSrKujX8vdz7lcBFB01KIftpaP8kY5H8pssibNaJbxGcYw==}
+    dependencies:
+      '@nuxt/kit': 3.9.3
+      defu: 6.1.4
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
     dev: true
 
   /@nuxtjs/tailwindcss@6.11.0:

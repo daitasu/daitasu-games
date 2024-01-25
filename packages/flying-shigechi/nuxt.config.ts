@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
-  modules: ["@nuxtjs/tailwindcss", "nuxt-icon"],
+  modules: ["@nuxtjs/tailwindcss", "nuxt-icon", "@nuxtjs/device"],
   app: {
     head: {
       title: "Flying Shigechi",

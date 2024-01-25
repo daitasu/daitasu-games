@@ -12,12 +12,10 @@ const closeMenu = () => (isOpen.value = false);
     <header>
       <div
         class="header fixed top-0 right-0 w-full flex justify-between items-center bg-indigo-200"
+        ref="layout"
       >
-        <div
-          class="flex flex-row items-center mx-2 cursor-pointer"
-          @click="openMenu"
-        >
-          <Icon name="uim:bars" color="black" size="30" />
+        <div class="flex flex-row items-center mx-2 cursor-pointer">
+          <Icon name="uim:bars" color="black" size="30" @click="openMenu" />
           <p class="text-24 ml-2">Flying Shigechi !!!</p>
         </div>
         <a class="mx-2 cursor-pointer">

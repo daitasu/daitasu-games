@@ -1,1 +1,3 @@
-export const GROUND_LEVEL = 15;
+export const GROUND_LEVEL = 100;
+
+export const PLAYER_SIZE = 90;
