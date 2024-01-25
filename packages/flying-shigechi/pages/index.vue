@@ -6,6 +6,8 @@ import Enemy from "~/components/Sprite/Enemy.vue";
 import Ground from "~/components/Map/Ground.vue";
 import GameInfoText from "~/components/GameControl/Text/GameInfoText.vue";
 
+const playing = ref<boolean>(false);
+
 const isOpen = ref<boolean>(false);
 const openPlayModal = () => {
   isOpen.value = true;
@@ -13,18 +15,38 @@ const openPlayModal = () => {
 const closePlayModal = () => {
   isOpen.value = false;
 };
+
+const playGame = () => {
+  playing.value = true;
+};
+const stopGame = () => {
+  playing.value = false;
+};
+
+const handleClickConfirm = () => {
+  playGame();
+  closePlayModal();
+};
+const handleClickCancel = () => {
+  stopGame();
+  closePlayModal();
+};
 </script>
 
 <template>
   <div class="mt-7">
-    <StartModal v-if="isOpen" @onClickClose="closePlayModal" />
+    <StartModal
+      v-if="isOpen"
+      @onClickConfirm="handleClickConfirm"
+      @onClickClose="handleClickCancel"
+    />
     <PrimaryButton v-else class="start-button" @onClick="openPlayModal"
       >Play Game</PrimaryButton
     >
     <GameInfoText />
     <Enemy />
     <Player />
-    <Ground />
+    <Ground :plaing="playing" />
   </div>
 </template>
 
