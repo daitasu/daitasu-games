@@ -7,7 +7,7 @@ const props = defineProps<Props>();
 </script>
 
 <template>
-  <hr class="ground" :class="{ 'ground--active': plaing }" />
+  <hr class="ground" :class="{ 'ground--active': playing }" />
 </template>
 
 <style lang="scss" scoped>
