@@ -6,35 +6,38 @@ import type { Vector } from "~/types/game";
 const initialPosition: Vector = {
   x: 0,
   y: GROUND_LEVEL,
-}; // 初期位置 (x, y)
+};
 const initialVelocity: Vector = { x: 0, y: 0 }; // 初期速度 (x方向, y方向)
 const gravity = -3; // 重力加速度
 
 // 更新間隔 (秒)
-const timeStep = 0.1;
+const timeStep = 0.08;
 
 // ボールの位置と速度を初期化
 const position = ref<Vector>({ ...initialPosition });
 const velocity = ref<Vector>({ ...initialVelocity });
-
-console.log(window.innerHeight - GROUND_LEVEL - 56);
 
 const jumping = ref<boolean>(false);
 
 const { isDesktop } = useDevice();
 
 const setGravityFall = () => {
-  // 上方向加速中または自然落下中
-  if (velocity.value.y > 0 || position.value.y > initialPosition.y) {
+  if (position.value.y > getCeilingY()) {
+    // 天井突破時
+    position.value.y = getCeilingY();
+    velocity.value.y = 0;
+  } else if (velocity.value.y > 0 || position.value.y > initialPosition.y) {
+    // ジャンプによる上方向加速または自然落下中
     position.value.y += velocity.value.y;
     velocity.value.y += gravity; // 縦速度を重力加速度で変化させる
   } else {
+    // 地上着地時
     position.value.y = initialPosition.y;
-    velocity.value.y = initialVelocity.y;
+    velocity.value.y = 0;
   }
 };
 
-const getFieldCeiling = () => {
+const getCeilingY = () => {
   return window.innerHeight - 56 - PLAYER_SIZE;
 };
 
@@ -60,20 +63,14 @@ const jumpPlayer = (e: KeyboardEvent | TouchEvent) => {
   }
 
   // ジャンプ時は負方向速度をキャンセルする
-  const positiveVelocityY = velocity.value.y > 0 ? 15 : 15;
+  const positiveVelocityY = 30;
 
   velocity.value.y += positiveVelocityY;
 };
-const layout = ref();
 
 onMounted(() => {
   window.addEventListener("keydown", jumpPlayer);
   window.addEventListener("touchstart", jumpPlayer);
-  console.log(layout.value);
-
-  // const layout = ref();
-
-  // console.log(layout.value);
 
   mainLoop();
 });
