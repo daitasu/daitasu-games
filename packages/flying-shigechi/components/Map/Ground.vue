@@ -1,6 +1,6 @@
 <script setup lang="ts">
 type Props = {
-  plaing: boolean;
+  playing: boolean;
 };
 
 const props = defineProps<Props>();
