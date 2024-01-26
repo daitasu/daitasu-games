@@ -8,32 +8,26 @@ import GameInfoText from "~/components/GameControl/Text/GameInfoText.vue";
 
 const { player, playing, playGame, stopGame } = useGameControl();
 
-const isOpen = ref<boolean>(false);
-const openPlayModal = () => {
-  isOpen.value = true;
-};
-const closePlayModal = () => {
-  isOpen.value = false;
-};
+const playModal = useToggle();
 
 const handleClickConfirm = () => {
   playGame();
-  closePlayModal();
+  playModal.hide();
 };
 const handleClickCancel = () => {
   stopGame();
-  closePlayModal();
+  playModal.hide();
 };
 </script>
 
 <template>
-  <div class="mt-7">
+  <div class="mt-7 game-area">
     <StartModal
-      v-if="isOpen"
+      v-if="playModal.isShown.value"
       @onClickConfirm="handleClickConfirm"
       @onClickClose="handleClickCancel"
     />
-    <PrimaryButton v-else class="start-button" @onClick="openPlayModal"
+    <PrimaryButton v-else class="start-button" @onClick="playModal.show"
       >Play Game</PrimaryButton
     >
     <GameInfoText />
@@ -44,6 +38,15 @@ const handleClickCancel = () => {
 </template>
 
 <style lang="scss" scoped>
+.game-area {
+  position: relative;
+  transform: scale(1);
+  width: 100%;
+  height: calc(100vh - 56px);
+  max-width: 1000px;
+  max-height: 700px;
+  border: solid 1px #ddd;
+}
 .start-button {
   position: fixed;
   right: 0;

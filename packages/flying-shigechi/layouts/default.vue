@@ -8,7 +8,7 @@ const closeMenu = () => (isOpen.value = false);
 </script>
 
 <template>
-  <div class="text-16">
+  <div class="text-16 flex justify-center w-full">
     <header>
       <div
         class="header fixed top-0 right-0 w-full flex justify-between items-center bg-indigo-200"
