@@ -1,19 +1,25 @@
 import { TIME_STEP } from "~/constants/game";
-import type { UsePlayer } from "./usePlayer";
+import type { UsePlayer } from "~/composables/usePlayer";
+import { useEnemies, type Enemy } from "~/composables/useEnemies";
+import type { Size } from "~/types/game";
 
 type UseGameControl = {
   player: UsePlayer;
+  enemies: Enemy[];
   mainLoop: () => void;
   playing: Ref<boolean>;
   playGame: () => void;
   stopGame: () => void;
 };
 
-export const useGameControl = (): UseGameControl => {
+export const useGameControl = (
+  gameWindowSize: Size // TODO: 引数を辞めてglobal state にしたい
+): UseGameControl => {
   /*
    * 各種登場人物のセット
    */
   const player = usePlayer();
+  const { enemies, spwanEnemy } = useEnemies(gameWindowSize);
 
   /*
    * ゲーム全体処理
@@ -37,6 +43,13 @@ export const useGameControl = (): UseGameControl => {
         player.velocity.value.y
     );
 
+    console.log(gameWindowSize);
+    if (enemies.length === 0 && gameWindowSize.height > 0) {
+      const enemy = spwanEnemy();
+
+      console.log("enemy ->", enemy);
+    }
+
     setTimeout(mainLoop, TIME_STEP * 1000);
   };
 
@@ -49,6 +62,7 @@ export const useGameControl = (): UseGameControl => {
 
   return {
     player,
+    enemies,
     mainLoop,
     playing,
     playGame,

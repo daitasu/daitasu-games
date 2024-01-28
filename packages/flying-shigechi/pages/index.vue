@@ -5,9 +5,14 @@ import Player from "~/components/Sprite/Player.vue";
 import Enemy from "~/components/Sprite/Enemy.vue";
 import Ground from "~/components/Map/Ground.vue";
 import GameInfoText from "~/components/GameControl/Text/GameInfoText.vue";
+import type { Size } from "~/types/game";
 
-const { player, playing, playGame, stopGame } = useGameControl();
+const gameAreaRef = ref<HTMLElement | null>(null);
+const gameWindowSize = ref<Size>({ width: 0, height: 0 });
 
+const { player, playing, enemies, playGame, stopGame } = useGameControl(
+  gameWindowSize.value
+);
 const playModal = useToggle();
 
 const handleClickConfirm = () => {
@@ -18,10 +23,16 @@ const handleClickCancel = () => {
   stopGame();
   playModal.hide();
 };
+
+onMounted(() => {
+  if (gameAreaRef.value !== null && !!gameAreaRef.value.clientHeight) {
+    gameWindowSize.value.height = gameAreaRef.value?.clientHeight;
+  }
+});
 </script>
 
 <template>
-  <div class="mt-7 game-area">
+  <div class="mt-7 game-area" ref="gameAreaRef">
     <StartModal
       v-if="playModal.isShown.value"
       @onClickConfirm="handleClickConfirm"
@@ -31,7 +42,9 @@ const handleClickCancel = () => {
       >Play Game</PrimaryButton
     >
     <GameInfoText />
-    <Enemy />
+    <template v-for="enemy in enemies">
+      <Enemy v-if="enemy.isActive" :enemy="enemy" />
+    </template>
     <Player :player="player" />
     <Ground :playing="playing" />
   </div>

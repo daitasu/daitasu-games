@@ -16,7 +16,7 @@ export type UsePlayer = {
 export const usePlayer = (): UsePlayer => {
   const { isDesktop } = useDevice();
 
-  // ボールの位置と速度を初期化
+  // 位置と速度を初期化
   const position = ref<Vector>({ ...INITIAL_POSITION });
   const velocity = ref<Vector>({ ...INITIAL_VELOCITY });
 
