@@ -43,7 +43,7 @@ onMounted(() => {
     >
     <GameInfoText />
     <template v-for="enemy in enemies">
-      <Enemy v-if="enemy.isActive" :enemy="enemy" />
+      <Enemy :key="enemy.id" v-if="enemy.isActive" :enemy="enemy" />
     </template>
     <Player :player="player" />
     <Ground :playing="playing" />
@@ -59,6 +59,20 @@ onMounted(() => {
   max-width: 1000px;
   max-height: 700px;
   border: solid 1px #ddd;
+
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: -91px;
+    top: -91px;
+    margin: auto;
+    width: calc(100% + 182px);
+    height: 100%;
+    border-left: solid 90px #fff;
+    border-right: solid 90px #fff;
+    z-index: 1;
+  }
 }
 .start-button {
   position: fixed;

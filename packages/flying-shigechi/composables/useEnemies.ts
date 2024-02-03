@@ -1,44 +1,43 @@
-import type { Vector, Size } from "~/types/game";
-import type { UsePlayer } from "./usePlayer";
+import type { Size } from "~/types/game";
+import { Enemy } from "~/models/enemy";
 
 export type UseEnemies = {
-  enemies: Enemy[];
+  enemies: ComputedRef<Enemy[]>;
   spwanEnemy: () => Enemy;
+  deleteOldestEnemy: () => void;
   update: () => void;
 };
 
-export class Enemy {
-  position: Vector;
-  velocity: Vector;
-  size: Size;
-  isActive: boolean;
-
-  constructor(gameWindowSize: Size) {
-    this.position = { x: 900, y: 300 };
-    this.velocity = { x: -10, y: 0 };
-    this.isActive = true;
-    this.size = { width: 60, height: 60 };
-  }
-
-  update() {}
-  collideWithPlayer(player: UsePlayer) {}
-}
-
 export const useEnemies = (gameWindowSize: Size): UseEnemies => {
-  const enemies = reactive<Enemy[]>([]);
+  let innerEnemies: Enemy[] = reactive<Enemy[]>([]);
+
+  const enemies = computed(() => {
+    return innerEnemies;
+  });
 
   const spwanEnemy = (): Enemy => {
     const enemy = new Enemy(gameWindowSize);
-    enemies.push(enemy);
+    innerEnemies.push(enemy);
 
-    return enemies.slice(-1)[0];
+    return innerEnemies.slice(-1)[0];
   };
 
-  const update = () => {};
+  const deleteOldestEnemy = (): void => {
+    if (!innerEnemies[0].isActive) {
+      innerEnemies.shift();
+    }
+  };
+
+  const update = () => {
+    innerEnemies.forEach((enemy) => {
+      enemy.update();
+    });
+  };
 
   return {
     enemies,
     spwanEnemy,
+    deleteOldestEnemy,
     update,
   };
 };
