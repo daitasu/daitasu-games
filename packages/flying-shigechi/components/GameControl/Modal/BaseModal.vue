@@ -47,7 +47,7 @@ const onClickClose = (e: Event) => {
 
 <style lang="scss" scoped>
 .overlay {
-  z-index: 2;
+  z-index: 3;
 
   &:before {
     background-color: #212121;
@@ -64,7 +64,7 @@ const onClickClose = (e: Event) => {
   }
 }
 .modal {
-  z-index: 3;
+  z-index: 4;
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
     0 1px 5px 0 rgba(0, 0, 0, 0.12);
 }

@@ -62,7 +62,7 @@ const handleClose = () => {
 
 <style lang="scss">
 .navigation {
-  z-index: 3;
+  z-index: 4;
   box-shadow: 0 8px 10px -5px rgba(0, 0, 0, 0.2),
     0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12);
 
@@ -70,7 +70,7 @@ const handleClose = () => {
   transition-duration: 0.2s;
 }
 .overlay {
-  z-index: 2;
+  z-index: 3;
 
   &:before {
     background-color: #212121;
