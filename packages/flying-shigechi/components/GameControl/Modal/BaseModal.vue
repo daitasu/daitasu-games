@@ -2,6 +2,16 @@
 import PrimaryButton from "../Button/PrimaryButton.vue";
 import SecondaryButton from "../Button/SecondaryButton.vue";
 
+type Props = {
+  confirmText?: string;
+  cancelText?: string;
+};
+
+withDefaults(defineProps<Props>(), {
+  confirmText: "はじめる",
+  cancelText: "とじる",
+});
+
 const emit = defineEmits<{
   (e: "onClickConfirm", value: Event): void;
   (e: "onClickClose", value: Event): void;
@@ -31,12 +41,12 @@ const onClickClose = (e: Event) => {
         <div>
           <slot name="actions">
             <div class="flex flex-row items-center">
-              <SecondaryButton class="m-1" @click="onClickClose"
-                >とじる</SecondaryButton
-              >
-              <PrimaryButton class="m-1" @click="onClickConfirm"
-                >挑む</PrimaryButton
-              >
+              <SecondaryButton class="m-1" @click="onClickClose">{{
+                cancelText
+              }}</SecondaryButton>
+              <PrimaryButton class="m-1" @click="onClickConfirm">{{
+                confirmText
+              }}</PrimaryButton>
             </div>
           </slot>
         </div>
