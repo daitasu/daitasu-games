@@ -1,14 +1,14 @@
 import { TIME_STEP } from "~/constants/game";
 import type { UsePlayer } from "~/composables/usePlayer";
 import { useEnemies } from "~/composables/useEnemies";
-import type { Size } from "~/types/game";
+import type { Size, GameState } from "~/types/game";
 import type { Enemy } from "~/models/enemy";
 
 type UseGameControl = {
   player: UsePlayer;
   enemies: Enemy[];
   mainLoop: () => void;
-  playing: Ref<boolean>;
+  gameState: Ref<GameState>;
   playGame: () => void;
   stopGame: () => void;
 };
@@ -25,13 +25,13 @@ export const useGameControl = (
   /*
    * ゲーム全体処理
    */
-  const playing = ref<boolean>(false);
+  const gameState = ref<GameState>("stop");
 
   const playGame = () => {
-    playing.value = true;
+    gameState.value = "play";
   };
   const stopGame = () => {
-    playing.value = false;
+    gameState.value = "stop";
   };
 
   const mainLoop = () => {
@@ -48,7 +48,7 @@ export const useGameControl = (
       enemies.deleteOldestEnemy();
     }
 
-    // 敵の出現条件
+    // 敵の出現
     if (gameWindowSize.height > 0 && gameWindowSize.height > 0) {
       if (
         enemies.enemies.value.length === 0 ||
@@ -72,7 +72,7 @@ export const useGameControl = (
     player,
     enemies: enemies.enemies.value,
     mainLoop,
-    playing,
+    gameState,
     playGame,
     stopGame,
   };

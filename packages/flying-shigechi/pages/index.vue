@@ -10,7 +10,7 @@ import type { Size } from "~/types/game";
 const gameAreaRef = ref<HTMLElement | null>(null);
 const gameWindowSize = ref<Size>({ width: 0, height: 0 });
 
-const { player, playing, enemies, playGame, stopGame } = useGameControl(
+const { player, gameState, enemies, playGame, stopGame } = useGameControl(
   gameWindowSize.value
 );
 const playModal = useToggle();
@@ -46,7 +46,7 @@ onMounted(() => {
       <Enemy :key="enemy.id" v-if="enemy.isActive" :enemy="enemy" />
     </template>
     <Player :player="player" />
-    <Ground :playing="playing" />
+    <Ground :gameState="gameState" />
   </div>
 </template>
 
@@ -71,6 +71,7 @@ onMounted(() => {
     height: 100%;
     border-left: solid 90px #fff;
     border-right: solid 90px #fff;
+    pointer-events: none;
     z-index: 1;
   }
 }

@@ -7,3 +7,5 @@ export type Size = {
   width: number;
   height: number;
 };
+
+export type GameState = "play" | "stop" | "gameover";
