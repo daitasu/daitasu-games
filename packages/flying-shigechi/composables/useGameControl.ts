@@ -38,23 +38,26 @@ export const useGameControl = (
     // 自然落下
     player.setGravityFall();
 
-    enemies.update();
+    if (gameState.value === "play") {
+      enemies.update();
 
-    // 不要になった敵を消す
-    if (
-      enemies.enemies.value.length > 0 &&
-      !enemies.enemies.value[0].isActive
-    ) {
-      enemies.deleteOldestEnemy();
-    }
-
-    // 敵の出現
-    if (gameWindowSize.height > 0 && gameWindowSize.height > 0) {
+      // 不要になった敵を消す
       if (
-        enemies.enemies.value.length === 0 ||
-        enemies.enemies.value[enemies.enemies.value.length - 1].position.x < 500
+        enemies.enemies.value.length > 0 &&
+        !enemies.enemies.value[0].isActive
       ) {
-        const enemy = enemies.spwanEnemy();
+        enemies.deleteOldestEnemy();
+      }
+
+      // 敵の出現
+      if (gameWindowSize.height > 0 && gameWindowSize.height > 0) {
+        if (
+          enemies.enemies.value.length === 0 ||
+          enemies.enemies.value[enemies.enemies.value.length - 1].position.x <
+            500
+        ) {
+          const enemy = enemies.spwanEnemy();
+        }
       }
     }
 

@@ -38,7 +38,10 @@ onMounted(() => {
       @onClickConfirm="handleClickConfirm"
       @onClickClose="handleClickCancel"
     />
-    <PrimaryButton v-else class="start-button" @onClick="playModal.show"
+    <PrimaryButton
+      v-if="gameState !== 'play' && !playModal.isShown.value"
+      class="start-button"
+      @onClick="playModal.show"
       >Play Game</PrimaryButton
     >
     <GameInfoText />
