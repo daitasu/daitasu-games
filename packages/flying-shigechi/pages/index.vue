@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import PrimaryButton from "~/components/GameControl/Button/PrimaryButton.vue";
 import StartModal from "~/components/GameControl/Modal/StartModal.vue";
+import GameOverModal from "~/components/GameControl/Modal/GameOverModal.vue";
 import Player from "~/components/Sprite/Player.vue";
 import Enemy from "~/components/Sprite/Enemy.vue";
 import Ground from "~/components/Map/Ground.vue";
@@ -14,7 +15,6 @@ const { player, gameState, enemies, playGame, stopGame } = useGameControl(
   gameWindowSize.value
 );
 const playModal = useToggle();
-
 const handleClickConfirm = () => {
   playGame();
   playModal.hide();
@@ -38,6 +38,11 @@ onMounted(() => {
       @onClickConfirm="handleClickConfirm"
       @onClickClose="handleClickCancel"
     />
+    <GameOverModal
+      v-if="gameState === 'gameover'"
+      @onClickConfirm="handleClickConfirm"
+      @onClickClose="handleClickCancel"
+    />
     <PrimaryButton
       v-if="gameState !== 'play' && !playModal.isShown.value"
       class="start-button"
@@ -45,7 +50,7 @@ onMounted(() => {
       >Play Game</PrimaryButton
     >
     <GameInfoText />
-    <template v-for="enemy in enemies">
+    <template v-if="gameState === 'play'" v-for="enemy in enemies">
       <Enemy :key="enemy.id" v-if="enemy.isActive" :enemy="enemy" />
     </template>
     <Player :player="player" />

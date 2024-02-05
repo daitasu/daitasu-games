@@ -40,5 +40,4 @@ export class Enemy {
       this.isActive = false;
     }
   }
-  collideWithPlayer(player: UsePlayer) {}
 }

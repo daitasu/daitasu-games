@@ -5,6 +5,7 @@ export type UseEnemies = {
   enemies: ComputedRef<Enemy[]>;
   spwanEnemy: () => Enemy;
   deleteOldestEnemy: () => void;
+  resetEnemies: () => void;
   update: () => void;
 };
 
@@ -14,6 +15,10 @@ export const useEnemies = (gameWindowSize: Size): UseEnemies => {
   const enemies = computed(() => {
     return innerEnemies;
   });
+
+  const resetEnemies = (): void => {
+    innerEnemies.length = 0;
+  };
 
   const spwanEnemy = (): Enemy => {
     const enemy = new Enemy(gameWindowSize);
@@ -38,6 +43,7 @@ export const useEnemies = (gameWindowSize: Size): UseEnemies => {
     enemies,
     spwanEnemy,
     deleteOldestEnemy,
+    resetEnemies,
     update,
   };
 };

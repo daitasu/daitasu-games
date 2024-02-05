@@ -3,6 +3,7 @@ import type { UsePlayer } from "~/composables/usePlayer";
 import { useEnemies } from "~/composables/useEnemies";
 import type { Size, GameState } from "~/types/game";
 import type { Enemy } from "~/models/enemy";
+import { checkCollide } from "~/utils/collide";
 
 type UseGameControl = {
   player: UsePlayer;
@@ -34,12 +35,35 @@ export const useGameControl = (
     gameState.value = "stop";
   };
 
+  const collideEnemyWithPlayer = () => {
+    const isCollided = enemies.enemies.value.some((enemy) => {
+      const enemyPosAndSize = {
+        position: enemy.position,
+        size: enemy.size,
+      };
+      const playerPosAndSize = {
+        position: { x: player.position.value.x, y: player.position.value.y },
+        size: player.size,
+      };
+      return checkCollide(enemyPosAndSize, playerPosAndSize);
+    });
+
+    if (isCollided) {
+      enemies.resetEnemies();
+      gameState.value = "gameover";
+    }
+  };
+
   const mainLoop = () => {
     // 自然落下
     player.setGravityFall();
 
     if (gameState.value === "play") {
+      // 物体の更新
       enemies.update();
+
+      // 衝突判定
+      collideEnemyWithPlayer();
 
       // 不要になった敵を消す
       if (
