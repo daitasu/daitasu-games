@@ -6,7 +6,7 @@ export const GROUND_LEVEL = 100;
 export const PLAYER_SIZE = 90;
 // 初期プレイヤー位置
 export const INITIAL_POSITION: Vector = {
-  x: 0,
+  x: 50,
   y: GROUND_LEVEL,
 };
 // 初期速度 (x方向, y方向)

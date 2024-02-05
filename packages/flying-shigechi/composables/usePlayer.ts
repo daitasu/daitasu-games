@@ -4,11 +4,12 @@ import {
   INITIAL_VELOCITY,
   PLAYER_SIZE,
 } from "~/constants/game";
-import type { Vector } from "~/types/game";
+import type { Size, Vector } from "~/types/game";
 
 export type UsePlayer = {
   position: Ref<Vector>;
   velocity: Ref<Vector>;
+  size: Size;
   setGravityFall: () => void;
   jumpPlayer: (e: KeyboardEvent | TouchEvent) => void;
 };
@@ -19,6 +20,7 @@ export const usePlayer = (): UsePlayer => {
   // 位置と速度を初期化
   const position = ref<Vector>({ ...INITIAL_POSITION });
   const velocity = ref<Vector>({ ...INITIAL_VELOCITY });
+  const size = { width: PLAYER_SIZE, height: PLAYER_SIZE };
 
   const getCeilingY = () => {
     return window.innerHeight - 56 - PLAYER_SIZE; // ヘッダー部分を差し引く
@@ -58,6 +60,7 @@ export const usePlayer = (): UsePlayer => {
   return {
     position,
     velocity,
+    size,
     setGravityFall,
     jumpPlayer,
   };

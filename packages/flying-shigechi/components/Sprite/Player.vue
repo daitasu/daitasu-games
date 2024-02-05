@@ -18,14 +18,12 @@ const position = player.position.value;
     color="black"
     :size="`${PLAYER_SIZE}`"
     class="player"
-    :style="`bottom: ${position.y}px;`"
+    :style="`left:${position.x}px; bottom: ${position.y}px;`"
   />
 </template>
 
 <style lang="scss" scoped>
 .player {
   position: absolute;
-  left: 50px;
-  bottom: 100px; //初期位置
 }
 </style>
