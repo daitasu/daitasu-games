@@ -8,21 +8,24 @@ import Collectible from "~/components/Sprite/Collectible.vue";
 import Ground from "~/components/Map/Ground.vue";
 import GameInfoText from "~/components/GameControl/Text/GameInfoText.vue";
 import type { Size } from "~/types/game";
+import { useGameStore } from "~/store/useGameStore";
+
+const store = useGameStore();
 
 const gameAreaRef = ref<HTMLElement | null>(null);
 const gameWindowSize = ref<Size>({ width: 0, height: 0 });
 
-const { player, gameState, enemies, collectibles, playGame, stopGame } =
-  useGameControl(gameWindowSize.value);
+const { player, enemies, collectibles } = useGameControl(gameWindowSize.value);
 const playModal = useToggle();
+
 const handleClickConfirm = () => {
-  playGame();
-  Collectible;
+  store.resetScore();
   playModal.hide();
+  store.playGame();
 };
 const handleClickCancel = () => {
-  stopGame();
   playModal.hide();
+  store.stopGame();
 };
 
 onMounted(() => {
@@ -39,30 +42,36 @@ onMounted(() => {
       @onClickConfirm="handleClickConfirm"
       @onClickClose="handleClickCancel"
     />
+
     <GameOverModal
-      v-if="gameState === 'gameover'"
+      v-if="store.gameState === 'gameover'"
       @onClickConfirm="handleClickConfirm"
       @onClickClose="handleClickCancel"
     />
+
     <PrimaryButton
-      v-if="gameState !== 'play' && !playModal.isShown.value"
+      v-if="store.gameState !== 'play' && !playModal.isShown.value"
       class="start-button"
       @onClick="playModal.show"
       >Play Game</PrimaryButton
     >
+
     <GameInfoText />
-    <template v-if="gameState === 'play'" v-for="enemy in enemies">
-      <Enemy v-if="enemy.isActive" :key="enemy.id" :enemy="enemy" />
-    </template>
-    <template v-if="gameState === 'play'" v-for="collectible in collectibles">
-      <Collectible
-        v-if="collectible.isActive"
-        :key="collectible.id"
-        :collectible="collectible"
-      />
+
+    <template v-if="store.gameState === 'play'">
+      <template v-for="enemy in enemies">
+        <Enemy v-if="enemy.isActive" :key="enemy.id" :enemy="enemy" />
+      </template>
+      <template v-for="collectible in collectibles">
+        <Collectible
+          v-if="collectible.isActive"
+          :key="collectible.id"
+          :collectible="collectible"
+        />
+      </template>
     </template>
     <Player :player="player" />
-    <Ground :gameState="gameState" />
+    <Ground />
   </div>
 </template>
 

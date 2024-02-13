@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import type { GameState } from "~/types/game";
+import { useGameStore } from "~/store/useGameStore";
 
-type Props = {
-  gameState: GameState;
-};
-
-defineProps<Props>();
+const store = useGameStore();
 </script>
 
 <template>
-  <hr class="ground" :class="{ 'ground--active': gameState === 'play' }" />
+  <hr
+    class="ground"
+    :class="{ 'ground--active': store.gameState === 'play' }"
+  />
 </template>
 
 <style lang="scss" scoped>

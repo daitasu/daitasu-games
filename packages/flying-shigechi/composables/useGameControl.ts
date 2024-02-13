@@ -1,25 +1,25 @@
 import { TIME_STEP } from "~/constants/game";
 import type { UsePlayer } from "~/composables/usePlayer";
 import { useEnemies } from "~/composables/useEnemies";
-import type { Size, GameState } from "~/types/game";
+import type { Size } from "~/types/game";
 import type { Enemy } from "~/models/enemy";
 import { checkCollide } from "~/utils/collide";
 import { useCollectibles } from "~/composables/useCollectibles";
 import type { Collectible } from "~/models/collectible";
+import { useGameStore } from "~/store/useGameStore";
 
 type UseGameControl = {
   player: UsePlayer;
   enemies: Enemy[];
   collectibles: Collectible[];
-  gameState: Ref<GameState>;
   mainLoop: () => void;
-  playGame: () => void;
-  stopGame: () => void;
 };
 
 export const useGameControl = (
   gameWindowSize: Size // TODO: 引数を辞めてglobal state にしたい
 ): UseGameControl => {
+  const store = useGameStore();
+
   /*
    * 各種登場人物のセット
    */
@@ -30,15 +30,6 @@ export const useGameControl = (
   /*
    * ゲーム全体処理
    */
-  const gameState = ref<GameState>("stop");
-
-  const playGame = () => {
-    gameState.value = "play";
-  };
-  const stopGame = () => {
-    gameState.value = "stop";
-  };
-
   const collideEnemyWithPlayer = () => {
     const isCollided = enemies.enemies.value.some((enemy) => {
       const enemyPosAndSize = {
@@ -54,7 +45,7 @@ export const useGameControl = (
 
     if (isCollided) {
       enemies.resetEnemies();
-      gameState.value = "gameover";
+      store.setGameOver();
     }
   };
 
@@ -74,7 +65,7 @@ export const useGameControl = (
       if (!checkCollide(collectiblePosAndSize, playerPosAndSize)) return;
 
       collectibles.collectibles.value[index].isActive = false;
-      // TODO: score up
+      store.score += 10;
     });
   };
 
@@ -82,7 +73,7 @@ export const useGameControl = (
     // 自然落下
     player.setGravityFall();
 
-    if (gameState.value === "play") {
+    if (store.gameState === "play") {
       // 物体の更新
       enemies.update();
       collectibles.update();
@@ -143,8 +134,5 @@ export const useGameControl = (
     enemies: enemies.enemies.value,
     collectibles: collectibles.collectibles.value,
     mainLoop,
-    gameState,
-    playGame,
-    stopGame,
   };
 };

@@ -1,9 +1,13 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useGameStore } from "~/store/useGameStore";
+
+const store = useGameStore();
+</script>
 
 <template>
   <div>
     <p>Charactor: xx</p>
-    <p>Score: xx</p>
+    <p>Score: {{ store.score }}</p>
   </div>
 </template>
 
