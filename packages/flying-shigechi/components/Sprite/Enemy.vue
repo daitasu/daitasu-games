@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Enemy } from "~/models/enemy";
+import { Enemy } from "~/models/enemy";
 
 type Props = {
   enemy: Enemy;

@@ -4,12 +4,15 @@ import { useEnemies } from "~/composables/useEnemies";
 import type { Size, GameState } from "~/types/game";
 import type { Enemy } from "~/models/enemy";
 import { checkCollide } from "~/utils/collide";
+import { useCollectibles } from "~/composables/useCollectibles";
+import type { Collectible } from "~/models/collectible";
 
 type UseGameControl = {
   player: UsePlayer;
   enemies: Enemy[];
-  mainLoop: () => void;
+  collectibles: Collectible[];
   gameState: Ref<GameState>;
+  mainLoop: () => void;
   playGame: () => void;
   stopGame: () => void;
 };
@@ -22,6 +25,7 @@ export const useGameControl = (
    */
   const player = usePlayer();
   const enemies = useEnemies(gameWindowSize);
+  const collectibles = useCollectibles(gameWindowSize);
 
   /*
    * ゲーム全体処理
@@ -54,6 +58,26 @@ export const useGameControl = (
     }
   };
 
+  const collideCollectibleWithPlayer = () => {
+    collectibles.collectibles.value.forEach((collectible, index) => {
+      if (!collectible.isActive) return;
+
+      const collectiblePosAndSize = {
+        position: collectible.position,
+        size: collectible.size,
+      };
+      const playerPosAndSize = {
+        position: { x: player.position.value.x, y: player.position.value.y },
+        size: player.size,
+      };
+
+      if (!checkCollide(collectiblePosAndSize, playerPosAndSize)) return;
+
+      collectibles.collectibles.value[index].isActive = false;
+      // TODO: score up
+    });
+  };
+
   const mainLoop = () => {
     // 自然落下
     player.setGravityFall();
@@ -61,26 +85,45 @@ export const useGameControl = (
     if (gameState.value === "play") {
       // 物体の更新
       enemies.update();
+      collectibles.update();
 
       // 衝突判定
       collideEnemyWithPlayer();
+      collideCollectibleWithPlayer();
 
-      // 不要になった敵を消す
+      // 不要物の削除
       if (
         enemies.enemies.value.length > 0 &&
         !enemies.enemies.value[0].isActive
       ) {
         enemies.deleteOldestEnemy();
       }
+      if (
+        collectibles.collectibles.value.length > 0 &&
+        !collectibles.collectibles.value[0].isActive
+      ) {
+        collectibles.deleteOldestCollectible();
+      }
 
-      // 敵の出現
+      // 敵、収集物の出現
       if (gameWindowSize.height > 0 && gameWindowSize.height > 0) {
         if (
           enemies.enemies.value.length === 0 ||
           enemies.enemies.value[enemies.enemies.value.length - 1].position.x <
             500
         ) {
-          const enemy = enemies.spwanEnemy();
+          enemies.spwanEnemy();
+        }
+      }
+      if (gameWindowSize.height > 0 && gameWindowSize.height > 0) {
+        if (
+          collectibles.collectibles.value.length < 1 &&
+          enemies.enemies.value[enemies.enemies.value.length - 1].position.x <
+            700
+        ) {
+          if (Math.random() < 0.4) {
+            collectibles.spwanCollectible();
+          }
         }
       }
     }
@@ -98,6 +141,7 @@ export const useGameControl = (
   return {
     player,
     enemies: enemies.enemies.value,
+    collectibles: collectibles.collectibles.value,
     mainLoop,
     gameState,
     playGame,

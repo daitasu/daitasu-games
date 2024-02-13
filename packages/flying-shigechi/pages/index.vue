@@ -4,6 +4,7 @@ import StartModal from "~/components/GameControl/Modal/StartModal.vue";
 import GameOverModal from "~/components/GameControl/Modal/GameOverModal.vue";
 import Player from "~/components/Sprite/Player.vue";
 import Enemy from "~/components/Sprite/Enemy.vue";
+import Collectible from "~/components/Sprite/Collectible.vue";
 import Ground from "~/components/Map/Ground.vue";
 import GameInfoText from "~/components/GameControl/Text/GameInfoText.vue";
 import type { Size } from "~/types/game";
@@ -11,12 +12,12 @@ import type { Size } from "~/types/game";
 const gameAreaRef = ref<HTMLElement | null>(null);
 const gameWindowSize = ref<Size>({ width: 0, height: 0 });
 
-const { player, gameState, enemies, playGame, stopGame } = useGameControl(
-  gameWindowSize.value
-);
+const { player, gameState, enemies, collectibles, playGame, stopGame } =
+  useGameControl(gameWindowSize.value);
 const playModal = useToggle();
 const handleClickConfirm = () => {
   playGame();
+  Collectible;
   playModal.hide();
 };
 const handleClickCancel = () => {
@@ -51,7 +52,14 @@ onMounted(() => {
     >
     <GameInfoText />
     <template v-if="gameState === 'play'" v-for="enemy in enemies">
-      <Enemy :key="enemy.id" v-if="enemy.isActive" :enemy="enemy" />
+      <Enemy v-if="enemy.isActive" :key="enemy.id" :enemy="enemy" />
+    </template>
+    <template v-if="gameState === 'play'" v-for="collectible in collectibles">
+      <Collectible
+        v-if="collectible.isActive"
+        :key="collectible.id"
+        :collectible="collectible"
+      />
     </template>
     <Player :player="player" />
     <Ground :gameState="gameState" />

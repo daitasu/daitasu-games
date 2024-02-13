@@ -6,7 +6,7 @@ import {
 import { GROUND_LEVEL } from "~/constants/game";
 import type { Sprite } from "~/models/sprite";
 
-export class Enemy implements Sprite {
+export class Collectible implements Sprite {
   id: number;
   position: Vector;
   velocity: Vector;
@@ -20,7 +20,7 @@ export class Enemy implements Sprite {
   ) {
     this.id = Date.now();
     this.isActive = true;
-    this.size = { width: 60, height: 60 };
+    this.size = { width: 40, height: 40 };
     this.velocity = { x: -15, y: 0 };
     this.updateStrategy = updateStrategy;
 
