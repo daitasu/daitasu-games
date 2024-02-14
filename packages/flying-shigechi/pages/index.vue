@@ -84,6 +84,7 @@ onMounted(() => {
   max-width: 1000px;
   max-height: 700px;
   border: solid 1px #ddd;
+  background-color: #fff;
 
   &:after {
     content: "";
@@ -94,8 +95,8 @@ onMounted(() => {
     margin: auto;
     width: calc(100% + 182px);
     height: 100%;
-    border-left: solid 90px #fff;
-    border-right: solid 90px #fff;
+    border-left: solid 90px #eef2ff;
+    border-right: solid 90px #eef2ff;
     pointer-events: none;
     z-index: 1;
   }

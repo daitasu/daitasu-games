@@ -8,7 +8,7 @@ const closeMenu = () => (isOpen.value = false);
 </script>
 
 <template>
-  <div class="text-16 flex justify-center w-full">
+  <div class="text-16 flex justify-center w-full bg-indigo-50">
     <header>
       <div
         class="header fixed top-0 right-0 w-full flex justify-between items-center bg-indigo-200"
@@ -34,5 +34,8 @@ const closeMenu = () => (isOpen.value = false);
   height: 56px;
   box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.2), 0 4px 5px 0 rgba(0, 0, 0, 0.14),
     0 1px 10px 0 rgba(0, 0, 0, 0.12);
+}
+body {
+  background-color: #eef2ff;
 }
 </style>

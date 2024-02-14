@@ -56,13 +56,17 @@ export default {
     },
     height: {
       full: "100%",
+      screen: "100vh",
       auto: "auto",
+      fit: "fit-content",
       48: "48px",
       56: "56px",
     },
     width: {
       full: "100%",
+      screen: "100vw",
       auto: "auto",
+      fit: "fit-content",
       180: "180px", //Button
       300: "300px", // Panel
       420: "420px", // Modal
