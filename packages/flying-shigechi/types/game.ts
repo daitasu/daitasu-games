@@ -9,3 +9,12 @@ export type Size = {
 };
 
 export type GameState = "play" | "stop" | "gameover";
+
+export type Charactor = {
+  id: string;
+  name: string;
+  imagePath: string;
+  description: string;
+  jumpSkill: number;
+  weight: number;
+};

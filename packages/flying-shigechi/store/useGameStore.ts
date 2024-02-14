@@ -1,10 +1,11 @@
 import { defineStore } from "pinia";
-import type { GameState, Size } from "~/types/game";
+import { CHARACTORS } from "~/constants/game";
+import type { Charactor, GameState, Size } from "~/types/game";
 
 export const useGameStore = defineStore("games", () => {
   const score = ref<number>(0);
   const gameState = ref<GameState>("stop");
-  const charactor = ref("");
+  const charactor = ref<Charactor>(CHARACTORS[0]);
 
   const gameWindowSize = ref<Size>({ width: 0, height: 0 });
 
@@ -25,6 +26,7 @@ export const useGameStore = defineStore("games", () => {
   return {
     score,
     gameState,
+    charactor,
     playGame,
     stopGame,
     setGameOver,
