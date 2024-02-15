@@ -26,9 +26,9 @@ export const CHARACTORS: Charactor[] = [
     weight: 1,
   },
   {
-    id: "green_onion",
-    name: "ねぎ",
-    imagePath: "green_onion",
+    id: "tomato",
+    name: "トマト",
+    imagePath: "tomato",
     description: "aaa",
     jumpSkill: 1,
     weight: 1,

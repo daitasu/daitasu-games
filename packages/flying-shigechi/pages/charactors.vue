@@ -5,7 +5,7 @@ import CharactorSelectModal from "~/components/GameControl/Modal/CharactorSelect
 import { useGameStore } from "~/store/useGameStore";
 
 const store = useGameStore();
-const selectedCharactor = ref<Charactor | null>(null);
+const selectedCharactor = ref<Charactor>(store.charactor);
 
 const { show, hide, isShown } = useToggle();
 
@@ -21,7 +21,7 @@ const handleClickConfirm = () => {
   hide();
 };
 const handleClickCancel = () => {
-  selectedCharactor.value = null;
+  selectedCharactor.value = store.charactor;
   hide();
 };
 </script>
@@ -37,17 +37,17 @@ const handleClickCancel = () => {
     <div class="mt-7 py-4 px-5 grid grid-cols-[1fr_1fr_1fr] gap-9">
       <template v-for="charactor in CHARACTORS" :key="charactor.id">
         <button
-          class="flex flex-col items-center justify-center min-w-[220px] rounded-12 bg-white p-3 border border-solid border-gray-400 hover:bg-gray-200 hover:opacity-80 transition"
+          class="charactor-card flex flex-col items-center justify-center min-w-[220px] rounded-12 bg-white p-3 border border-solid border-gray-400 hover:bg-gray-200 hover:opacity-80 transition"
           @click="openModal(charactor)"
         >
           <p class="font-bold text-20 mb-0.5">{{ charactor.name }}</p>
-          <div class="relative w-[120px] h-[120px]">
+          <div class="charactor relative w-[120px] h-[120px]">
             <img
-              src="/shigechi.png"
+              :src="`/shigechi/${charactor.imagePath}.png`"
               alt="キャラクター"
               height="120"
               width="120"
-              class="object-cover absolute w-full h-full"
+              class="object-cover absolute w-full h-full rounded-8"
             />
           </div>
           <p class="text-14 mt-0.5 max-m-[170px]">
@@ -59,4 +59,28 @@ const handleClickCancel = () => {
   </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+}
+
+.charactor {
+  display: inline-block;
+  transition: transform 0.4s;
+}
+.charactor-card:hover {
+  .charactor {
+    animation: sway 0.4s;
+    animation-iteration-count: 2;
+  }
+}
+</style>

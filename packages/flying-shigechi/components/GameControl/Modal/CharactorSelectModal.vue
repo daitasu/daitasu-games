@@ -20,11 +20,11 @@ defineProps<Props>();
         <div class="font-bold pt-1">
           <div class="relative w-[120px] h-[120px]">
             <img
-              src="/shigechi.png"
+              :src="`/shigechi/${charactor.imagePath}.png`"
               alt="選択されたキャラクター"
               height="120"
               width="120"
-              class="object-cover absolute w-full h-full"
+              class="object-cover absolute w-full h-full rounded-8"
             />
           </div>
         </div>

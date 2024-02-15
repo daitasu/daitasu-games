@@ -6,17 +6,24 @@ type Props = {
 };
 
 const { collectible } = defineProps<Props>();
-const { position, size } = collectible;
 </script>
 
 <template>
-  <div>
-    <Icon
-      name="game-icons:round-star"
-      color="black"
-      class="collectible absolute"
-      :size="`${size.height}`"
-      :style="`left:${position.x}px; bottom: ${position.y}px;`"
-    />
+  <div
+    class="absolute"
+    :style="`left:${collectible.position.x}px; bottom: ${collectible.position.y}px;`"
+  >
+    <div
+      class="relative"
+      :style="`height: ${collectible.size.height}px; width: ${collectible.size.width}px;`"
+    >
+      <img
+        :src="`/collectible.png`"
+        alt="collectible"
+        :height="collectible.size.height"
+        :width="collectible.size.height"
+        class="object-cover absolute w-full h-full rounded-8"
+      />
+    </div>
   </div>
 </template>

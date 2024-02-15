@@ -20,7 +20,7 @@ export class Collectible implements Sprite {
   ) {
     this.id = Date.now();
     this.isActive = true;
-    this.size = { width: 40, height: 40 };
+    this.size = { width: 42, height: 60 };
     this.velocity = { x: -15, y: 0 };
     this.updateStrategy = updateStrategy;
 

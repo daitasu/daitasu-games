@@ -6,23 +6,24 @@ type Props = {
 };
 
 const { enemy } = defineProps<Props>();
-const { position, size } = enemy;
 </script>
 
 <template>
-  <div>
-    <Icon
-      name="game-icons:angler-fish"
-      color="black"
-      class="enemy absolute"
-      :size="`${size.height}`"
-      :style="`left:${position.x}px; bottom: ${position.y}px;`"
-    />
+  <div
+    class="absolute"
+    :style="`left:${enemy.position.x}px; bottom: ${enemy.position.y}px;`"
+  >
+    <div
+      class="relative"
+      :style="`height: ${enemy.size.height}px; width: ${enemy.size.width}px;`"
+    >
+      <img
+        :src="`/enemy.png`"
+        alt="enemy"
+        :height="enemy.size.height"
+        :width="enemy.size.height"
+        class="object-cover absolute w-full h-full rounded-8"
+      />
+    </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.enemy {
-  transform: scale(-1, 1);
-}
-</style>
