@@ -54,7 +54,7 @@ export const CHARACTORS: Charactor[] = [
     name: "白菜",
     imagePath: "chinese_cabbage",
     description: "めちゃ重い",
-    jump: -10,
+    jump: -5,
     weight: -5,
   },
   {

@@ -17,8 +17,10 @@ const openModal = (charactor: Charactor) => {
 const handleClickConfirm = () => {
   if (selectedCharactor.value) {
     store.charactor = selectedCharactor.value;
+    localStorage.setItem("charactor_id", store.charactor.id);
   }
   hide();
+  navigateTo("/");
 };
 const handleClickCancel = () => {
   selectedCharactor.value = store.charactor;
@@ -38,6 +40,10 @@ const handleClickCancel = () => {
       <template v-for="charactor in CHARACTORS" :key="charactor.id">
         <button
           class="charactor-card flex flex-col items-center justify-center min-w-[220px] rounded-12 bg-white p-3 border border-solid border-gray-400 hover:bg-gray-200 hover:opacity-80 transition"
+          :class="{
+            'bg-indigo-300 hover:bg-indigo-300':
+              charactor.id === store.charactor.id,
+          }"
           @click="openModal(charactor)"
         >
           <p class="font-bold text-20 mb-0.5">{{ charactor.name }}</p>
