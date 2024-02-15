@@ -20,4 +20,5 @@ There are a kind of obstacles (bambooshoot) in this game. It will be game over i
 ![character Select](https://github.com/daitasu/daitasu-games/blob/main/packages/flying-shigechi/public/screenshot/charactor_select.png)
 
 The player can choose a vegetable to play with Shigechi from among 10 types.
+
 Jumping ability and weight vary depending on the vegetable.
