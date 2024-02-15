@@ -45,6 +45,7 @@ export const useGameControl = (
 
     if (isCollided) {
       enemies.resetEnemies();
+      collectibles.resetCollectibles();
       store.setGameOver();
     }
   };

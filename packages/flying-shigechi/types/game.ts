@@ -15,6 +15,6 @@ export type Charactor = {
   name: string;
   imagePath: string;
   description: string;
-  jumpSkill: number;
+  jump: number;
   weight: number;
 };

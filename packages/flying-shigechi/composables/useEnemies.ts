@@ -18,6 +18,9 @@ export const useEnemies = (gameWindowSize: Size): UseEnemies => {
 
   const resetEnemies = (): void => {
     innerEnemies.length = 0;
+    innerEnemies.forEach(() => {
+      innerEnemies.shift();
+    });
   };
 
   const spwanEnemy = (): Enemy => {

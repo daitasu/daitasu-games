@@ -4,6 +4,7 @@ import {
   INITIAL_VELOCITY,
   PLAYER_SIZE,
 } from "~/constants/game";
+import { useGameStore } from "~/store/useGameStore";
 import type { Size, Vector } from "~/types/game";
 
 export type UsePlayer = {
@@ -16,6 +17,7 @@ export type UsePlayer = {
 
 export const usePlayer = (): UsePlayer => {
   const { isDesktop } = useDevice();
+  const store = useGameStore();
 
   // 位置と速度を初期化
   const position = ref<Vector>({ ...INITIAL_POSITION });
@@ -32,9 +34,13 @@ export const usePlayer = (): UsePlayer => {
       position.value.y = getCeilingY();
       velocity.value.y = 0;
     } else if (velocity.value.y > 0 || position.value.y > INITIAL_POSITION.y) {
+      const weightAbility = store.charactor.weight || 0;
+
       // ジャンプによる上方向加速または自然落下中
       position.value.y += velocity.value.y;
-      velocity.value.y += GRAVITY; // 縦速度を重力加速度で変化させる
+
+      // 縦速度を重力加速度で変化させる
+      velocity.value.y += GRAVITY + weightAbility;
     } else {
       // 地上着地時
       position.value.y = INITIAL_POSITION.y;
@@ -43,8 +49,6 @@ export const usePlayer = (): UsePlayer => {
   };
 
   const jumpPlayer = (e: KeyboardEvent | TouchEvent) => {
-    //TODO: 押しっぱなし禁止
-
     if (isDesktop && e instanceof KeyboardEvent) {
       if (e.key !== " " && e.code !== "Space") {
         return;
@@ -54,7 +58,9 @@ export const usePlayer = (): UsePlayer => {
     // ジャンプ時は負方向速度をキャンセルする
     const positiveVelocityY = 30;
 
-    velocity.value.y += positiveVelocityY;
+    const jumpAbility = store.charactor.jump || 0;
+
+    velocity.value.y += positiveVelocityY + jumpAbility;
   };
 
   return {

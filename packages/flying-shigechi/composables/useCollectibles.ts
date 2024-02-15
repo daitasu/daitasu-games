@@ -18,6 +18,9 @@ export const useCollectibles = (gameWindowSize: Size): UseCollectibles => {
 
   const resetCollectibles = (): void => {
     innerCollectibles.length = 0;
+    innerCollectibles.forEach(() => {
+      innerCollectibles.shift();
+    });
   };
 
   const spwanCollectible = (): Collectible => {
