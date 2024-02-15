@@ -98,13 +98,14 @@ export const useGameControl = (
       }
 
       // 敵、収集物の出現
+      const gameLevel = Math.floor(store.score / 20);
       if (gameWindowSize.height > 0 && gameWindowSize.height > 0) {
         if (
           enemies.enemies.value.length === 0 ||
           enemies.enemies.value[enemies.enemies.value.length - 1].position.x <
             500
         ) {
-          enemies.spwanEnemy();
+          enemies.spwanEnemy(gameLevel);
         }
       }
       if (gameWindowSize.height > 0 && gameWindowSize.height > 0) {
@@ -114,7 +115,7 @@ export const useGameControl = (
             700
         ) {
           if (Math.random() < 0.4) {
-            collectibles.spwanCollectible();
+            collectibles.spwanCollectible(gameLevel);
           }
         }
       }

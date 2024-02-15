@@ -6,6 +6,12 @@ import {
 import { GROUND_LEVEL } from "~/constants/game";
 import type { Sprite } from "~/models/sprite";
 
+type Constructor = {
+  gameWindowSize: Size;
+  updateStrategy?: UpdateStrategy;
+  AdditionalVelocity?: number;
+};
+
 export class Collectible implements Sprite {
   id: number;
   position: Vector;
@@ -14,14 +20,15 @@ export class Collectible implements Sprite {
   isActive: boolean;
   updateStrategy: UpdateStrategy;
 
-  constructor(
-    gameWindowSize: Size,
-    updateStrategy: UpdateStrategy = new DefaultUpdateStrategy()
-  ) {
+  constructor({
+    gameWindowSize,
+    updateStrategy = new DefaultUpdateStrategy(),
+    AdditionalVelocity = 0,
+  }: Constructor) {
     this.id = Date.now();
     this.isActive = true;
     this.size = { width: 42, height: 60 };
-    this.velocity = { x: -15, y: 0 };
+    this.velocity = { x: -15 + AdditionalVelocity, y: 0 };
     this.updateStrategy = updateStrategy;
 
     const maxY =

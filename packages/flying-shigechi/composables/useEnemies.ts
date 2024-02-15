@@ -3,7 +3,7 @@ import { Enemy } from "~/models/enemy";
 
 export type UseEnemies = {
   enemies: ComputedRef<Enemy[]>;
-  spwanEnemy: () => Enemy;
+  spwanEnemy: (level: number) => Enemy;
   deleteOldestEnemy: () => void;
   resetEnemies: () => void;
   update: () => void;
@@ -23,8 +23,8 @@ export const useEnemies = (gameWindowSize: Size): UseEnemies => {
     });
   };
 
-  const spwanEnemy = (): Enemy => {
-    const enemy = new Enemy(gameWindowSize);
+  const spwanEnemy = (level: number): Enemy => {
+    const enemy = new Enemy({ gameWindowSize, AdditionalVelocity: -2 * level });
     innerEnemies.push(enemy);
 
     return innerEnemies.slice(-1)[0];

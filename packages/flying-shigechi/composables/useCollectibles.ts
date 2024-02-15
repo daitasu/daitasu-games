@@ -3,7 +3,7 @@ import { Collectible } from "~/models/collectible";
 
 export type UseCollectibles = {
   collectibles: ComputedRef<Collectible[]>;
-  spwanCollectible: () => Collectible;
+  spwanCollectible: (level: number) => Collectible;
   deleteOldestCollectible: () => void;
   resetCollectibles: () => void;
   update: () => void;
@@ -23,8 +23,11 @@ export const useCollectibles = (gameWindowSize: Size): UseCollectibles => {
     });
   };
 
-  const spwanCollectible = (): Collectible => {
-    const collectible = new Collectible(gameWindowSize);
+  const spwanCollectible = (level: number): Collectible => {
+    const collectible = new Collectible({
+      gameWindowSize,
+      AdditionalVelocity: -2 * level,
+    });
     innerCollectibles.push(collectible);
 
     return innerCollectibles.slice(-1)[0];
