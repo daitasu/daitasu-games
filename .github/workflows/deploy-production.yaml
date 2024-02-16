@@ -1,0 +1,40 @@
+
+name: Deploy to Firebase Hosting
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'デプロイ対象ブランチ'
+        required: true
+        default: 'master'
+      package:
+        description: 'デプロイ対象のパッケージ (例: flying-shigechi)'
+        required: true
+        default: 'flying-shigechi'
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.inputs.branch }}
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Build and generate
+        run: |
+          cd packages/${{ github.event.inputs.package }}
+          pnpm install
+          pnpm build
+          pnpm generate
+
+      - name: Deploy to Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_FLYING_SHIGECHI }}
+          projectId: ${{ github.event.inputs.package }}
+          onlyDeployChanges: true # 差分だけデプロイする場合、trueに設定
+          channelId: live
