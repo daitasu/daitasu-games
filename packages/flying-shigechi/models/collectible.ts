@@ -33,8 +33,8 @@ export class Collectible implements Sprite {
 
     const maxY =
       gameWindowSize.height !== 0
-        ? gameWindowSize.height - this.size.height
-        : 600 - this.size.height;
+        ? gameWindowSize.height - this.size.height * 2
+        : 500 - this.size.height;
 
     const randomY = Math.floor(Math.random() * maxY) + GROUND_LEVEL;
 

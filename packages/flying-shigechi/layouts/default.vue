@@ -18,7 +18,11 @@ const closeMenu = () => (isOpen.value = false);
           <Icon name="uim:bars" color="black" size="30" @click="openMenu" />
           <p class="text-24 ml-2">Flying Shigechi !!!</p>
         </div>
-        <a class="mx-2 cursor-pointer">
+        <a
+          class="mx-2 cursor-pointer"
+          href="https://github.com/daitasu/daitasu-games/tree/main/packages/flying-shigechi"
+          target="_blank"
+        >
           <Icon name="uil:github" color="black" size="30" />
         </a>
       </div>

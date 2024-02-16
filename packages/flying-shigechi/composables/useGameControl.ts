@@ -32,6 +32,8 @@ export const useGameControl = (
    */
   const collideEnemyWithPlayer = () => {
     const isCollided = enemies.enemies.value.some((enemy) => {
+      if (!enemy.isActive) return false;
+
       const enemyPosAndSize = {
         position: enemy.position,
         size: enemy.size,

@@ -18,8 +18,8 @@ export const useCollectibles = (gameWindowSize: Size): UseCollectibles => {
 
   const resetCollectibles = (): void => {
     innerCollectibles.length = 0;
-    innerCollectibles.forEach(() => {
-      innerCollectibles.shift();
+    innerCollectibles.forEach((innerCollectible) => {
+      innerCollectible.isActive = false;
     });
   };
 
